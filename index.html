@@ -1,13 +1,38 @@
-<?php include('header.php'); ?>
-<?php include('nav.php'); ?>
+<!-- index.php -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Archive</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <?php include 'header-index.php'; ?>
+    <?php include 'nav-index.php'; ?>
 
+    <section class="info">
+        <h2>About This Website</h2>
+        <p>
+            Welcome to The Archive! This website is an offline platform that you can access at any time and from anywhere, dedicated to archiving your favorite stories. 
+            It's the perfect place to store and manage your lists so you can always come back to them whenever you want. No need for complicated setups—just register, log in, and start adding your content.
+        </p>
+        <p>
+            Whether you’re an avid reader or a writer, this site is designed to keep your stories organized and easily accessible. Never worry about losing track of your favorite stories again!
+        </p>
+        <p>
+            We hope you enjoy using this platform to preserve your beloved stories and return to them whenever you need.
+        </p>
+    </section>
 
-<div class="split-container">
-    <div class="about-section">
-        <h2>Alien Stage</h2>
-        <p> Still in construction....</p>
-    </div>
-</div>
+    <section class="info">
+        <div id="ad-container">
+            <div class="ad">Ad 1: Get 50% off on your first purchase!</div>
+            <div class="ad">Ad 2: Join our newsletter for exclusive offers!</div>
+            <div class="ad">Ad 3: Free shipping on orders over $50!</div>
+        </div>
+    </section>
 
-<?php include('info-col.php'); ?>
-<?php include('footer.php'); ?>
+    <?php include 'footer.php'; ?>
+</body>
+</html>
