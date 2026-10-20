@@ -1,0 +1,54 @@
+:root {
+  /* palette */
+  --linen: #e8e3d7;
+  --paper: #f8f5ec;
+  --paper-deep: #efeadd;
+  --card: #fffdf7;
+  --note: #f5eed8;
+  --sage: #68765b;
+  --sage-ink: #56634a;
+  --sage-soft: #dfe3d6;
+  --charcoal: #343830;
+  --ochre: #a58b58;
+  --ochre-ink: #6f5a2f;
+  --ochre-soft: #efe5cf;
+  --rose: #9b707a;
+  --rose-ink: #7d5560;
+  --rose-soft: #efe0e2;
+  --text: var(--charcoal);
+  --text-muted: #5e6157;
+  --border: #c9c4b7;
+  --border-strong: #8f8a7e;
+  --titlebar-idle: #dcd7ca;
+
+  /* depth */
+  --shadow-hard: 3px 3px 0 rgb(52 56 48 / 0.14);
+  --shadow-soft: 0 1px 2px rgb(52 56 48 / 0.1), 0 8px 24px rgb(52 56 48 / 0.08);
+
+  /* type */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  --font-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+
+  /* layout */
+  --taskbar-h: 46px;
+  --dock-h: 65px;
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --dur: 140ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur: 0ms;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

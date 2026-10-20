@@ -1,0 +1,119 @@
+.win {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--paper);
+  border: 1px solid var(--border-strong);
+  border-radius: 5px 5px 3px 3px;
+  box-shadow: var(--shadow-hard), var(--shadow-soft);
+  animation: win-in var(--dur) var(--ease);
+}
+.win:focus {
+  outline: none;
+}
+.win:focus-visible {
+  outline: 2px solid var(--charcoal);
+  outline-offset: 2px;
+}
+.win.is-max {
+  border-width: 0 0 1px;
+  border-radius: 0;
+  box-shadow: none;
+}
+.win.is-dragging {
+  box-shadow: 6px 6px 0 rgb(52 56 48 / 0.16), var(--shadow-soft);
+}
+
+.win-titlebar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 5px 0 10px;
+  color: var(--charcoal);
+  background: var(--titlebar-idle);
+  border-bottom: 1px solid var(--border-strong);
+  user-select: none;
+  -webkit-user-select: none;
+}
+@media (pointer: fine) {
+  .win:not(.is-max) .win-titlebar { cursor: grab; }
+  .win.is-dragging .win-titlebar { cursor: grabbing; }
+}
+.win.is-active .win-titlebar {
+  color: #fff;
+  background: var(--sage);
+  border-bottom-color: var(--sage-ink);
+}
+
+.win-title {
+  flex: none;
+  max-width: 50%;
+  overflow: hidden;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.win-file {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.win-controls {
+  display: flex;
+  flex: none;
+  gap: 3px;
+  margin-left: auto;
+}
+.win-ctrl {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 24px;
+  padding: 0;
+  color: var(--charcoal);
+  background: var(--paper);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  box-shadow: 1px 1px 0 rgb(52 56 48 / 0.18);
+}
+.win-ctrl:hover {
+  background: #fff;
+}
+.win-ctrl:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+.win-ctrl.is-close:hover {
+  color: #fff;
+  background: var(--rose-ink);
+  border-color: var(--rose-ink);
+}
+.win.is-active .win-titlebar :focus-visible {
+  outline-color: #fff;
+}
+
+.win-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  container-type: inline-size;
+  font-size: 0.9375rem;
+}
+
+@keyframes win-in {
+  from { opacity: 0; scale: 0.985; }
+  to { opacity: 1; scale: 1; }
+}
