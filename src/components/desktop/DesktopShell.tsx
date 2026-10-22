@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { APPS, APP_BY_ID, ALL_APP_IDS, type AppCtx, type AppId } from '../../app/apps';
 import { parseHash, type Route } from '../../app/routes';
-import { createWmState, getActiveId, wmReducer, type Bounds } from '../../app/windows';
+import { createWmState, getActiveId, wmReducer, type Bounds, type Rect } from '../../app/windows';
 import { featuredProjects, site } from '../../data/config';
 import { AppContent } from '../apps/AppContent';
 import { Window } from '../window/Window';
 import { DesktopIcon } from './DesktopIcon';
 import { Taskbar } from './Taskbar';
+
 
 const TASKBAR_H = 46; // keep in sync with --taskbar-h
 
@@ -57,6 +58,10 @@ export function DesktopShell() {
   }, []);
   const toggleMax = useCallback((id: AppId) => dispatch({ type: 'toggleMax', id }), []);
   const moveApp = useCallback((id: AppId, x: number, y: number) => dispatch({ type: 'move', id, x, y }), []);
+  const resizeApp = useCallback(
+    (id: AppId, rect: Rect) => dispatch({ type: 'resize', id, rect, bounds: getBounds() }),
+    [getBounds],
+  );
 
   const activeId = getActiveId(wm);
   const onTaskClick = useCallback(
@@ -135,6 +140,7 @@ export function DesktopShell() {
               onMinimize={minimizeApp}
               onToggleMax={toggleMax}
               onMove={moveApp}
+              onResize={resizeApp}
             >
               <AppContent id={id} ctx={ctx} />
             </Window>

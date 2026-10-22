@@ -117,3 +117,67 @@
   from { opacity: 0; scale: 0.985; }
   to { opacity: 1; scale: 1; }
 }
+/* resize handles: invisible strips on the edges, mouse/pen only */
+.win-resize {
+  position: absolute;
+  z-index: 2;
+  touch-action: none;
+}
+.win-resize.is-n,
+.win-resize.is-s {
+  right: 10px;
+  left: 10px;
+  height: 5px;
+  cursor: ns-resize;
+}
+.win-resize.is-n { top: 0; }
+.win-resize.is-s { bottom: 0; }
+.win-resize.is-e,
+.win-resize.is-w {
+  top: 10px;
+  bottom: 10px;
+  width: 5px;
+  cursor: ew-resize;
+}
+.win-resize.is-e { right: 0; }
+.win-resize.is-w { left: 0; }
+.win-resize.is-ne,
+.win-resize.is-nw,
+.win-resize.is-se,
+.win-resize.is-sw {
+  width: 10px;
+  height: 10px;
+}
+.win-resize.is-ne { top: 0; right: 0; cursor: nesw-resize; }
+.win-resize.is-sw { bottom: 0; left: 0; cursor: nesw-resize; }
+.win-resize.is-nw { top: 0; left: 0; cursor: nwse-resize; }
+.win-resize.is-se {
+  right: 0;
+  bottom: 0;
+  width: 14px;
+  height: 14px;
+  cursor: nwse-resize;
+  /* little diagonal grip so the corner is discoverable */
+  background: linear-gradient(
+    135deg,
+    transparent 0 52%,
+    var(--border-strong) 52% 60%,
+    transparent 60% 72%,
+    var(--border-strong) 72% 80%,
+    transparent 80%
+  );
+  opacity: 0.7;
+}
+.win.is-resizing {
+  box-shadow: 6px 6px 0 rgb(52 56 48 / 0.16), var(--shadow-soft);
+}
+/* stop embedded players (YouTube iframes) from swallowing the pointer mid-drag */
+.win.is-resizing iframe,
+.win.is-dragging iframe {
+  pointer-events: none;
+}
+@media (pointer: coarse) {
+  .win-resize {
+    display: none;
+  }
+}
