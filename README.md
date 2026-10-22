@@ -2,7 +2,8 @@
 
 A cozy personal-computer portfolio. On wide screens it's a desktop with draggable
 windows; on phones and tablets it becomes a single-column launcher with
-full-screen panels and a bottom dock.
+full-screen panels and a bottom dock. There's also a small arcade for a
+coffee break.
 
 Built with React, TypeScript, Vite, plain CSS and lucide-react icons.
 
@@ -48,6 +49,23 @@ Anything left empty is hidden, or shown as a labelled "setup placeholder".
 - **Notes / Now playing:** optional; hidden until they have content (`notes`
   also needs `enabled: true`). Now playing is a listening card, never audio.
 
+## Arcade
+
+`arcade.exe` is a window with three small games, all written from scratch with
+no extra dependencies:
+
+- **Tic-tac-toe** against the computer, with a "chill" mode and an
+  "unbeatable" minimax mode. The first move alternates each round.
+- **Minesweeper** on an 8×8 or 10×10 board. The first click is always safe.
+  Flag with right-click, the F key, or the flag-mode toggle on touch screens.
+- **Memory match** with 8 dev-themed pairs.
+
+Best times and move counts are saved in localStorage under `arcade.best.v1`,
+so they stay on the visitor's device and nothing is sent anywhere.
+
+The terminal has a few extras too: `games` opens the arcade, plus `coinflip`,
+`roll [sides]` and `guess [n]` (a 1–100 number guessing game).
+
 ## Deploying
 
 `npm run build` produces a static site in `dist/`.
@@ -70,6 +88,7 @@ src/
     mobile/     launcher, full-screen panels, dock
     projects/   featured projects, detail view, GitHub archive
     apps/       about, resume, contact, notes, now playing, readme, terminal
+      arcade/   arcade window, tic-tac-toe, minesweeper, memory, best scores
     ui/         small shared pieces
   data/         config.ts (edit me) + derived links
   lib/github/   API client, normalisation, cache, filtering, hook
@@ -84,3 +103,7 @@ Escape closes the start menu (and mobile panels), focus moves into windows
 and panels when they open, status never relies on colour alone, and
 `prefers-reduced-motion` disables animations. Windows drag only by the title
 bar and only with a mouse or pen, never on touch.
+
+The arcade games are fully playable by keyboard: the game tabs and the
+Minesweeper board use arrow keys, every square and card has a label that
+includes its state, and game results are announced to screen readers.
