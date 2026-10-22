@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react';
-import { LayoutGrid } from 'lucide-react';
 import { APPS, APP_BY_ID, type AppId } from '../../app/apps';
 import type { WmState } from '../../app/windows';
 import { github, site } from '../../data/config';
@@ -7,6 +6,8 @@ import { githubProfileUrl } from '../../data/links';
 import { ExtLink } from '../ui/ExtLink';
 import { AppTile } from './AppTile';
 import { Clock } from './Clock';
+import { LayoutGrid, Moon, Sun } from 'lucide-react';
+import { useTheme } from '../../lib/theme';
 
 type Props = {
   wm: WmState;
@@ -21,6 +22,8 @@ export function Taskbar({ wm, activeId, projectTitle, onTaskClick, onOpen }: Pro
   const wrapRef = useRef<HTMLDivElement>(null);
   const startRef = useRef<HTMLButtonElement>(null);
   const profile = githubProfileUrl();
+  const { theme, setPref } = useTheme();
+  const nextTheme = theme === 'night' ? 'linen' : 'night';
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -127,7 +130,15 @@ export function Taskbar({ wm, activeId, projectTitle, onTaskClick, onOpen }: Pro
           );
         })}
       </ul>
-
+      <button
+        type="button"
+        className="task-theme"
+        aria-label={`Switch to ${nextTheme} theme`}
+        title={`Switch to ${nextTheme} theme`}
+        onClick={() => setPref(nextTheme)}
+      >
+        {theme === 'night' ? <Sun size={15} aria-hidden="true" /> : <Moon size={15} aria-hidden="true" />}
+      </button>
       <div className="task-status">
         <span className="sr-only">Local time </span>
         <Clock />

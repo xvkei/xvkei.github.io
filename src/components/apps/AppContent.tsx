@@ -11,6 +11,7 @@ import { Readme } from './Readme';
 import { Resume } from './Resume';
 import { Terminal } from './Terminal';
 import { Arcade } from './arcade/Arcade';
+import { Settings } from './Settings';
 
 /** Memoised so dragging/focusing windows never re-renders their contents. */
 export const AppContent = memo(function AppContent({ id, ctx }: { id: AppId; ctx: AppCtx }) {
@@ -33,6 +34,8 @@ export const AppContent = memo(function AppContent({ id, ctx }: { id: AppId; ctx
       return <Notes />;
     case 'arcade':
       return <Arcade />;
+    case 'settings':
+      return <Settings />;
     case 'terminal':
       return <Terminal ctx={ctx} />;
     case 'readme':

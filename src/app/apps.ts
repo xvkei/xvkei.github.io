@@ -1,8 +1,8 @@
 import type { LucideIcon } from 'lucide-react';
-import { Archive, FileCode, FileText, FolderOpen, Gamepad2, Mail, Music2, NotebookPen, StickyNote, Terminal, User } from 'lucide-react';
+import { Archive, FileCode, FileText, FolderOpen, Gamepad2, Mail, Music2, NotebookPen, SlidersHorizontal, StickyNote, Terminal, User } from 'lucide-react';
 import { music, notes } from '../data/config';
 
-export type AppId = 'readme' | 'projects' | 'archive' | 'project' | 'about' | 'resume' | 'contact' | 'music' | 'notes' | 'arcade' | 'terminal';
+export type AppId = 'readme' | 'projects' | 'archive' | 'project' | 'about' | 'resume' | 'contact' | 'music' | 'notes' | 'arcade' | 'settings' | 'terminal';
 export type Tone = 'sage' | 'ochre' | 'rose' | 'charcoal' | 'paper';
 
 export type AppDef = {
@@ -38,6 +38,7 @@ const DEFS: AppDef[] = [
   { id: 'music', label: 'Now playing', fileName: 'now_playing.m3u', blurb: 'a little music player', icon: Music2, tone: 'rose', listed: true, size: { w: 480, h: 720 }, pos: { x: 600, y: 24 } },
   { id: 'notes', label: 'Notes', fileName: 'notes.md', blurb: 'short notes on learning and experiments', icon: NotebookPen, tone: 'ochre', listed: true, size: { w: 520, h: 500 }, pos: { x: 360, y: 90 } },
   { id: 'arcade', label: 'Arcade', fileName: 'arcade.exe', blurb: 'a few tiny games for a break', icon: Gamepad2, tone: 'sage', listed: true, size: { w: 500, h: 620 }, pos: { x: 470, y: 40 } },
+  { id: 'settings', label: 'Settings', fileName: 'settings.app', blurb: 'themes and desktop preferences', icon: SlidersHorizontal, tone: 'paper', listed: true, size: { w: 440, h: 440 }, pos: { x: 520, y: 80 } },
   { id: 'terminal', label: 'Terminal', fileName: 'terminal.app', blurb: 'optional shortcuts by command', icon: Terminal, tone: 'charcoal', listed: true, size: { w: 600, h: 400 }, pos: { x: 420, y: 200 } },
   { id: 'project', label: 'Project details', fileName: 'project.md', blurb: '', icon: FileCode, tone: 'paper', listed: false, size: { w: 640, h: 600 }, pos: { x: 400, y: 32 } },
 ];

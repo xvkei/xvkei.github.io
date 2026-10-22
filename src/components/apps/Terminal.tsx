@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import { APPS, APP_BY_ID, isAppEnabled, type AppCtx, type AppId } from '../../app/apps';
 import { site } from '../../data/config';
+import { getThemePref, setThemePref, type ThemePref } from '../../lib/theme';
 
 type Line = { id: number; kind: 'in' | 'out' | 'err'; text: string };
 
@@ -17,6 +18,7 @@ const HELP: Array<[string, string]> = [
   ['contact', 'contact details'],
   ['whoami', 'who runs this desktop'],
   ['date', 'your local date and time'],
+  ['theme [name]', 'linen, night or system'],
   ['games', 'open the arcade'],
   ['coinflip', 'heads or tails'],
   ['roll [sides]', 'roll a die, e.g. "roll 20"'],
@@ -31,6 +33,13 @@ const ALIASES = new Map<string, AppId>([
   ['about', 'about'], ['resume', 'resume'], ['cv', 'resume'],
   ['contact', 'contact'], ['email', 'contact'],
   ['readme', 'readme'], ['notes', 'notes'], ['music', 'music'], ['arcade', 'arcade'], ['games', 'arcade'], ['terminal', 'terminal'],
+  ['settings', 'settings'],
+]);
+
+const THEME_NAMES = new Map<string, ThemePref>([
+  ['linen', 'linen'], ['light', 'linen'],
+  ['night', 'night'], ['dark', 'night'],
+  ['system', 'system'], ['auto', 'system'],
 ]);
 
 function resolveApp(name: string): AppId | null {
@@ -138,6 +147,20 @@ export function Terminal({ ctx }: { ctx: AppCtx }) {
           say(`yes! it was ${game.secret}. you got it in ${game.tries} ${game.tries === 1 ? 'try' : 'tries'}.`);
           guessGame.current = null;
         }
+        break;
+      }
+      case 'theme': {
+        if (args.length === 0) {
+          say(`theme: ${getThemePref()}. options: linen, night, system.`);
+          break;
+        }
+        const next = THEME_NAMES.get(args[0]);
+        if (!next) {
+          fail(`theme: no theme called "${args[0]}". try linen, night or system.`);
+          break;
+        }
+        setThemePref(next);
+        say(`theme set to ${next}.`);
         break;
       }
       default: {

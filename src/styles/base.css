@@ -133,7 +133,7 @@ code {
   color: var(--charcoal);
   border: 1px solid var(--border-strong);
   border-radius: 3px;
-  box-shadow: 2px 2px 0 rgb(52 56 48 / 0.14);
+  box-shadow: 2px 2px 0 rgb(var(--shadow-rgb) / 0.14);
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.2;
@@ -142,20 +142,20 @@ code {
   transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background-color var(--dur) var(--ease);
 }
 .btn:hover {
-  background: #fff;
+  background: var(--surface-hi);
   color: var(--charcoal);
 }
 .btn:active {
   transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0 rgb(52 56 48 / 0.14);
+  box-shadow: 1px 1px 0 rgb(var(--shadow-rgb) / 0.14);
 }
 .btn-primary {
   background: var(--sage);
-  border-color: var(--sage-ink);
+  border-color: var(--sage-deep);
   color: #fff;
 }
 .btn-primary:hover {
-  background: var(--sage-ink);
+  background: var(--sage-deep);
   color: #fff;
 }
 .btn-block {
@@ -188,15 +188,15 @@ code {
   display: inline-grid;
   place-items: center;
   flex: none;
-  border: 1px solid rgb(52 56 48 / 0.55);
+  border: 1px solid rgb(var(--shadow-rgb) / 0.55);
   border-radius: 4px;
-  box-shadow: 2px 2px 0 rgb(52 56 48 / 0.16);
+  box-shadow: 2px 2px 0 rgb(var(--shadow-rgb) / 0.16);
   transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 .tile-md { width: 48px; height: 48px; }
 .tile-sm { width: 22px; height: 22px; border-radius: 3px; box-shadow: none; }
 .tone-sage { background: var(--sage); color: #fff; }
-.tone-ochre { background: var(--ochre); color: var(--charcoal); }
+.tone-ochre { background: var(--ochre); color: var(--device); }
 .tone-rose { background: var(--rose); color: #fff; }
 .tone-charcoal { background: var(--charcoal); color: var(--paper); }
 .tone-paper { background: var(--paper); color: var(--charcoal); }
@@ -210,7 +210,7 @@ code {
   width: 18px;
   height: 6px;
   background: var(--ochre);
-  border: 1px solid rgb(52 56 48 / 0.55);
+  border: 1px solid rgb(var(--shadow-rgb) / 0.55);
   border-bottom: 0;
   border-radius: 3px 3px 0 0;
 }

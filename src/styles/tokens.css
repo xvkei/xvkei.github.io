@@ -1,30 +1,4 @@
 :root {
-  /* palette */
-  --linen: #e8e3d7;
-  --paper: #f8f5ec;
-  --paper-deep: #efeadd;
-  --card: #fffdf7;
-  --note: #f5eed8;
-  --sage: #68765b;
-  --sage-ink: #56634a;
-  --sage-soft: #dfe3d6;
-  --charcoal: #343830;
-  --ochre: #a58b58;
-  --ochre-ink: #6f5a2f;
-  --ochre-soft: #efe5cf;
-  --rose: #9b707a;
-  --rose-ink: #7d5560;
-  --rose-soft: #efe0e2;
-  --text: var(--charcoal);
-  --text-muted: #5e6157;
-  --border: #c9c4b7;
-  --border-strong: #8f8a7e;
-  --titlebar-idle: #dcd7ca;
-
-  /* depth */
-  --shadow-hard: 3px 3px 0 rgb(52 56 48 / 0.14);
-  --shadow-soft: 0 1px 2px rgb(52 56 48 / 0.1), 0 8px 24px rgb(52 56 48 / 0.08);
-
   /* type */
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
@@ -37,6 +11,88 @@
   /* motion */
   --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
   --dur: 140ms;
+}
+
+/* linen: the default light theme (also the base every theme builds on) */
+:root,
+:root[data-theme='linen'] {
+  color-scheme: light;
+
+  /* palette */
+  --linen: #e8e3d7;
+  --paper: #f8f5ec;
+  --paper-deep: #efeadd;
+  --card: #fffdf7;
+  --note: #f5eed8;
+  --sage: #68765b;
+  --sage-ink: #56634a; /* sage text on page surfaces */
+  --sage-deep: #56634a; /* darker sage for fills/borders behind white text */
+  --sage-soft: #dfe3d6;
+  --charcoal: #343830; /* main ink colour */
+  --ochre: #a58b58;
+  --ochre-ink: #6f5a2f;
+  --ochre-soft: #efe5cf;
+  --rose: #9b707a;
+  --rose-ink: #7d5560;
+  --rose-deep: #7d5560;
+  --rose-soft: #efe0e2;
+  --text: var(--charcoal);
+  --text-muted: #5e6157;
+  --border: #c9c4b7;
+  --border-strong: #8f8a7e;
+  --titlebar-idle: #dcd7ca;
+
+  /* surfaces */
+  --surface-hi: #fff; /* hover highlight on paper-coloured controls */
+  --device: #343830; /* always-dark hardware: music player, card backs */
+  --device-ink: #f8f5ec;
+
+  /* rgb triplets for translucent colours */
+  --shadow-rgb: 52 56 48;
+  --paper-rgb: 248 245 236;
+  --dot-rgb: 52 56 48;
+
+  /* depth */
+  --shadow-hard: 3px 3px 0 rgb(var(--shadow-rgb) / 0.14);
+  --shadow-soft: 0 1px 2px rgb(var(--shadow-rgb) / 0.1), 0 8px 24px rgb(var(--shadow-rgb) / 0.08);
+}
+
+/* night: dark and cozy */
+:root[data-theme='night'] {
+  color-scheme: dark;
+
+  --linen: #1b1d19;
+  --paper: #262923;
+  --paper-deep: #20231e;
+  --card: #2c3029;
+  --note: #3a3626;
+  --sage: #68765b;
+  --sage-ink: #a9bb94;
+  --sage-deep: #56634a;
+  --sage-soft: #323b2b;
+  --charcoal: #e6e1d5;
+  --ochre: #a58b58;
+  --ochre-ink: #d6bf8c;
+  --ochre-soft: #3c3424;
+  --rose: #9b707a;
+  --rose-ink: #dcadb7;
+  --rose-deep: #7d5560;
+  --rose-soft: #432e35;
+  --text-muted: #a4a799;
+  --border: #40443b;
+  --border-strong: #6a6e62;
+  --titlebar-idle: #30342c;
+
+  --surface-hi: #343830;
+  --device: #121410;
+  --device-ink: #e8e3d7;
+
+  --shadow-rgb: 0 0 0;
+  --paper-rgb: 38 41 35;
+  --dot-rgb: 230 225 213;
+
+  --shadow-hard: 3px 3px 0 rgb(0 0 0 / 0.35);
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.3);
 }
 
 @media (prefers-reduced-motion: reduce) {

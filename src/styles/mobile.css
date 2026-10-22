@@ -4,7 +4,7 @@
   min-height: 100dvh;
   padding-bottom: calc(var(--dock-h) + env(safe-area-inset-bottom, 0px));
   background-color: var(--linen);
-  background-image: radial-gradient(rgb(52 56 48 / 0.07) 1px, transparent 1.4px);
+  background-image: radial-gradient(rgb(var(--dot-rgb) / 0.07) 1px, transparent 1.4px);
   background-size: 20px 20px;
 }
 
@@ -96,7 +96,7 @@
   border: 1px solid var(--border);
   border-left: 4px solid var(--ochre);
   border-radius: 3px;
-  box-shadow: 2px 2px 0 rgb(52 56 48 / 0.08);
+  box-shadow: 2px 2px 0 rgb(var(--shadow-rgb) / 0.08);
 }
 .m-feature-name {
   font-size: 1.0625rem;
@@ -123,7 +123,7 @@
   background: var(--paper);
   border: 1px solid var(--border);
   border-radius: 4px;
-  box-shadow: 2px 2px 0 rgb(52 56 48 / 0.08);
+  box-shadow: 2px 2px 0 rgb(var(--shadow-rgb) / 0.08);
 }
 .m-app .icon-tile {
   grid-row: 1 / 3;
@@ -168,7 +168,7 @@
     max(0.6rem, env(safe-area-inset-left, 0px));
   color: #fff;
   background: var(--sage);
-  border-bottom: 1px solid var(--sage-ink);
+  border-bottom: 1px solid var(--sage-deep);
 }
 .m-panel-bar :focus-visible {
   outline-color: #fff;
@@ -185,7 +185,7 @@
   font-size: 0.8125rem;
   color: var(--charcoal);
   background: var(--paper);
-  border: 1px solid var(--sage-ink);
+  border: 1px solid var(--sage-deep);
   border-radius: 3px;
   box-shadow: 1px 1px 0 rgb(0 0 0 / 0.15);
 }
@@ -241,7 +241,7 @@
     max(6px, env(safe-area-inset-left, 0px));
   background: var(--paper);
   border-top: 1px solid var(--border-strong);
-  box-shadow: 0 -2px 0 rgb(52 56 48 / 0.05);
+  box-shadow: 0 -2px 0 rgb(var(--shadow-rgb) / 0.05);
 }
 .m-dock button {
   display: flex;
