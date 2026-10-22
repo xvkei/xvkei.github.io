@@ -17,6 +17,10 @@ const HELP: Array<[string, string]> = [
   ['contact', 'contact details'],
   ['whoami', 'who runs this desktop'],
   ['date', 'your local date and time'],
+  ['games', 'open the arcade'],
+  ['coinflip', 'heads or tails'],
+  ['roll [sides]', 'roll a die, e.g. "roll 20"'],
+  ['guess [n]', 'guess my number from 1 to 100'],
   ['clear', 'clear the screen'],
 ];
 
@@ -26,7 +30,7 @@ const ALIASES = new Map<string, AppId>([
   ['repos', 'archive'], ['archive', 'archive'], ['github', 'archive'],
   ['about', 'about'], ['resume', 'resume'], ['cv', 'resume'],
   ['contact', 'contact'], ['email', 'contact'],
-  ['readme', 'readme'], ['notes', 'notes'], ['music', 'music'], ['terminal', 'terminal'],
+  ['readme', 'readme'], ['notes', 'notes'], ['music', 'music'], ['arcade', 'arcade'], ['games', 'arcade'], ['terminal', 'terminal'],
 ]);
 
 function resolveApp(name: string): AppId | null {
@@ -49,6 +53,7 @@ export function Terminal({ ctx }: { ctx: AppCtx }) {
   const pastIndex = useRef(-1);
   const logRef = useRef<HTMLDivElement>(null);
   const inputId = useId();
+  const guessGame = useRef<{ secret: number; tries: number } | null>(null);
 
   useEffect(() => {
     const el = logRef.current;
@@ -96,6 +101,45 @@ export function Terminal({ ctx }: { ctx: AppCtx }) {
       case 'clear':
         setLines([]);
         return;
+            case 'games':
+      case 'play':
+        target = 'arcade';
+        break;
+      case 'coinflip':
+      case 'flip':
+        say(Math.random() < 0.5 ? 'heads.' : 'tails.');
+        break;
+      case 'roll': {
+        const sides = args[0] ? Number(args[0]) : 6;
+        if (!Number.isInteger(sides) || sides < 2 || sides > 1000) {
+          fail('roll: give a whole number of sides from 2 to 1000, e.g. "roll 20".');
+          break;
+        }
+        say(`d${sides} → ${1 + Math.floor(Math.random() * sides)}`);
+        break;
+      }
+      case 'guess': {
+        const newSecret = () => 1 + Math.floor(Math.random() * 100);
+        if (args.length === 0) {
+          guessGame.current = { secret: newSecret(), tries: 0 };
+          say('ok, i picked a number from 1 to 100. try "guess 50".');
+          break;
+        }
+        const n = Number(args[0]);
+        if (!Number.isInteger(n) || n < 1 || n > 100) {
+          fail('guess: pick a whole number from 1 to 100.');
+          break;
+        }
+        const game = guessGame.current ?? (guessGame.current = { secret: newSecret(), tries: 0 });
+        game.tries += 1;
+        if (n < game.secret) say(`${n} is too low.`);
+        else if (n > game.secret) say(`${n} is too high.`);
+        else {
+          say(`yes! it was ${game.secret}. you got it in ${game.tries} ${game.tries === 1 ? 'try' : 'tries'}.`);
+          guessGame.current = null;
+        }
+        break;
+      }
       default: {
         const app = args.length === 0 ? resolveApp(cmd) : null;
         if (app) target = app;

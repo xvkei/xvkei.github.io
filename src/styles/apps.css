@@ -773,3 +773,237 @@
   width: 52px;
   height: 52px;
 }
+/* arcade */
+.arcade-body {
+  display: grid;
+}
+.arcade-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  padding-left: 0.5rem;
+}
+.arcade-tab {
+  position: relative;
+  top: 1px;
+  z-index: 1;
+  padding: 0.4rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--paper-deep);
+  border: 1px solid var(--border);
+  border-radius: 3px 3px 0 0;
+  cursor: pointer;
+}
+.arcade-tab[aria-selected='true'] {
+  font-weight: 600;
+  color: var(--charcoal);
+  background: var(--card);
+  border-bottom-color: var(--card);
+}
+.arcade-panel {
+  padding: 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+/* shared game bits */
+.game {
+  display: grid;
+  gap: 0.8rem;
+}
+.game-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+.game-stats {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.game-status {
+  min-height: 1.5em;
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+.game-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.seg {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+}
+.seg button,
+.game-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text);
+  background: var(--paper);
+  border: 0;
+  cursor: pointer;
+}
+.seg button + button {
+  border-left: 1px solid var(--border-strong);
+}
+.seg button:focus-visible {
+  outline-offset: -3px;
+}
+.game-toggle {
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+}
+.seg button[aria-pressed='true'],
+.game-toggle[aria-pressed='true'] {
+  font-weight: 600;
+  color: #fff;
+  background: var(--sage-ink);
+}
+
+/* tic-tac-toe */
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  width: min(100%, 270px);
+  margin: 0 auto;
+}
+.ttt-cell {
+  aspect-ratio: 1;
+  font-family: var(--font-mono);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--charcoal);
+  background: var(--paper);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  box-shadow: var(--shadow-hard);
+  cursor: pointer;
+  transition: background var(--dur) var(--ease);
+}
+.ttt-cell:hover:not([aria-disabled='true']) {
+  background: #fff;
+}
+.ttt-cell[aria-disabled='true'] {
+  cursor: default;
+}
+.ttt-cell.is-x {
+  color: var(--sage-ink);
+}
+.ttt-cell.is-o {
+  color: var(--rose-ink);
+}
+.ttt-cell.is-win {
+  background: var(--ochre-soft);
+  border: 2px solid var(--ochre-ink);
+}
+
+/* minesweeper */
+.mines-wrap {
+  overflow-x: auto;
+}
+.mines-board {
+  width: max-content;
+  margin: 0 auto;
+  background: var(--border);
+  border: 2px solid var(--border-strong);
+}
+.mines-row {
+  display: flex;
+}
+.mine-btn {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--charcoal);
+  background: var(--titlebar-idle);
+  border: 1px solid var(--border-strong);
+  box-shadow: inset 1px 1px 0 rgb(255 255 255 / 0.6), inset -1px -1px 0 rgb(52 56 48 / 0.15);
+  cursor: pointer;
+}
+.mine-btn.is-open {
+  background: var(--paper);
+  border-color: var(--border);
+  box-shadow: none;
+  cursor: default;
+}
+.mine-btn.is-flag {
+  color: var(--rose-ink);
+}
+.mine-btn.is-boom {
+  color: #fff;
+  background: var(--rose-ink);
+}
+.mine-btn:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 2px solid var(--charcoal);
+  outline-offset: -2px;
+}
+.mine-btn.n1 { color: var(--sage-ink); }
+.mine-btn.n2 { color: var(--ochre-ink); }
+.mine-btn.n3 { color: var(--rose-ink); }
+
+/* memory */
+.memory-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: min(100%, 340px);
+  margin: 0 auto;
+}
+.memory-card {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.3rem;
+  aspect-ratio: 1;
+  padding: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  color: var(--paper);
+  background: repeating-linear-gradient(45deg, transparent 0 6px, rgb(255 255 255 / 0.05) 6px 12px), var(--charcoal);
+  border: 1px solid #22251f;
+  border-radius: 4px;
+  box-shadow: var(--shadow-hard);
+  cursor: pointer;
+  transition: transform var(--dur) var(--ease);
+}
+.memory-card:active:not([aria-disabled='true']) {
+  transform: scale(0.97);
+}
+.memory-card.is-up {
+  color: var(--charcoal);
+  background: var(--card);
+  border-color: var(--border-strong);
+}
+.memory-card.is-matched {
+  color: var(--sage-ink);
+  background: var(--sage-soft);
+  border-color: var(--sage);
+  box-shadow: none;
+  cursor: default;
+}
+.memory-name {
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+}
