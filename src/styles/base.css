@@ -298,3 +298,126 @@ code {
   left: 0;
   color: var(--ochre-ink);
 }
+/* boot screen */
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 200000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  cursor: pointer;
+  background-color: var(--linen);
+  background-image: radial-gradient(rgb(var(--dot-rgb) / 0.085) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+  transition: opacity 300ms var(--ease);
+}
+.boot.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+.boot-card {
+  width: min(420px, 100%);
+  background: var(--paper);
+  border: 1px solid var(--border-strong);
+  border-radius: 5px 5px 3px 3px;
+  box-shadow: var(--shadow-hard), var(--shadow-soft);
+}
+.boot-card:focus {
+  outline: none;
+}
+.boot-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 10px;
+  color: #fff;
+  background: var(--sage);
+  border-bottom: 1px solid var(--sage-deep);
+  border-radius: 4px 4px 0 0;
+}
+.boot-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.boot-file {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+.boot-body {
+  display: grid;
+  padding: 0.9rem 1rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.75;
+  color: var(--charcoal);
+}
+.boot-kicker {
+  margin-bottom: 0.35rem;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+.boot-lines li {
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 150ms var(--ease);
+}
+.boot-lines li.is-on {
+  opacity: 1;
+}
+.boot-dots {
+  flex: 1;
+  min-width: 12px;
+  margin-bottom: 0.45em;
+  border-bottom: 1px dotted var(--border-strong);
+}
+.boot-ok {
+  font-weight: 600;
+  color: var(--sage-ink);
+}
+.boot-progress {
+  display: flex;
+  gap: 3px;
+  margin: 0.75rem 0 0.6rem;
+}
+.boot-progress span {
+  flex: 1;
+  height: 10px;
+  background: var(--titlebar-idle);
+  border-radius: 1px;
+}
+.boot-progress span.is-on {
+  background: var(--sage);
+}
+.boot-loading,
+.boot-enter {
+  min-height: 1.75em;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.boot-enter {
+  justify-self: start;
+  padding: 0;
+  font-family: inherit;
+  line-height: inherit;
+  text-align: left;
+  background: none;
+  border: 0;
+}
+.boot-enter:focus-visible {
+  outline-offset: 3px;
+}
+.boot-cursor {
+  display: inline-block;
+  width: 7px;
+  height: 13px;
+  margin-left: 4px;
+  vertical-align: -2px;
+  background: var(--sage-ink);
+  animation: boot-blink 1s steps(1) infinite;
+}
+@keyframes boot-blink {
+  50% { opacity: 0; }
+}

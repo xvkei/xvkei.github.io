@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import { APPS, APP_BY_ID, isAppEnabled, type AppCtx, type AppId } from '../../app/apps';
 import { site } from '../../data/config';
 import { getThemePref, setThemePref, type ThemePref } from '../../lib/theme';
+import { requestReboot } from '../../lib/boot';
 
 type Line = { id: number; kind: 'in' | 'out' | 'err'; text: string };
 
@@ -24,6 +25,7 @@ const HELP: Array<[string, string]> = [
   ['roll [sides]', 'roll a die, e.g. "roll 20"'],
   ['guess [n]', 'guess my number from 1 to 100'],
   ['clear', 'clear the screen'],
+  ['reboot', 'restart the desktop'],
 ];
 
 // a Map, so prototype keys like "constructor" can never resolve to anything
@@ -163,6 +165,10 @@ export function Terminal({ ctx }: { ctx: AppCtx }) {
         say(`theme set to ${next}.`);
         break;
       }
+      case 'reboot':
+        say('rebooting…');
+        window.setTimeout(requestReboot, 400);
+        break;
       default: {
         const app = args.length === 0 ? resolveApp(cmd) : null;
         if (app) target = app;
