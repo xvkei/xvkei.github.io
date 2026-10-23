@@ -106,29 +106,37 @@ export const featuredProjects: FeaturedProject[] = [
     "I worked as front-end developer, database designer, and back-end developer: I designed the 7-table normalized database, built the CRUD operations and role-based access with Flask-SQLAlchemy, built the front end with Bootstrap 5 and Jinja2, and integrated the NVIDIA Nemotron API for the eligibility checker and chatbot.",
   },
   {
-    id: 'sproutwatch',
-    name: 'SproutWatch',
+    id: 'hueverb',
+    name: 'Hueverb',
     shortDescription:
-      'A plant growth anomaly detector that flags unusual patterns in height data and explains each one on an interactive chart.',
+      'An interactive exhibition where sound becomes painting',
     longDescription:
-      'Upload a CSV of weekly plant height measurements and SproutWatch combines Z-score analysis with rule-based checks to flag points that look wrong, tagging each one with the reason it was flagged. Built for DSELC03C – CS301 at LPU Cavite.',
+      'Play a song, sing, clap, or hum, and every sound leaves its own brush stroke on the canvas: pitch decides where it lands and what color it takes, loudness sets its weight, and the texture of the sound shapes the mark it makes. When the music ends, you have an original artwork to name, hang in your collection, and download as a print.',
     problem:
-      'Spotting problems in growth data by eye, like a wilted plant, a sudden drop, or growth that has stalled, is slow and easy to miss across many plants and weeks.',
+      'Most music visualizers are either pre-rendered or use simple geometric shapes. I wanted to make a more organic, painterly experience where the sound itself leaves a mark on the canvas.',
     features: [
-      'CSV upload of weekly plant heights, plus a built-in sample dataset',
-      'Detects five anomaly types: statistical outliers (Z-score), dead or wilted plants, sudden drops, sudden spikes, and stagnant growth',
-      'Interactive D3.js chart with tooltips showing height, Z-score, and the reasons a point was flagged',
-      'Adjustable Z-score threshold slider and filters for anomalies or normal points',
+      'Real-time sound analysis that detects each new sound and turns it into a brush stroke that flows for as long as the sound lasts',
+      'Ten brushes, from oil and watercolor to ink, charcoal, and drip, plus an Auto mode where each sound picks its own brush',
+      'Twelve artist-inspired palettes, from Kandinsky and Monet to Rothko, Hockney, and sumi ink',
+      'Paint with an uploaded track and your microphone at the same time, with a Calm to Lively sensitivity slider',
+      'A live placard that writes itself as you paint, and a personal collection saved in the browser',
+      'Downloads as a plain PNG or a framed print at up to 2400 px, in five canvas shapes',
+      'Fully responsive, with keyboard shortcuts and radial wheels on desktop and swipe gestures on phones',
     ],
-    technologies: ['PHP', 'JavaScript', 'D3.js', 'Bootstrap 5', 'HTML', 'CSS'],
-    category: 'data analysis & visualization',
-    repositoryUrl: 'https://github.com/xvkei/sproutwatch',
-    demoUrl: null,
-    image: null,
-    status: 'academic project (team)',
+    technologies: ['JavaScript (ES modules)', 'Web Audio API', 'Canvas 2D', 'IndexedDB', 'HTML', 'CSS'],
+    category: 'creative coding',
+    repositoryUrl: 'https://github.com/xvkei/hueverb',
+    demoUrl: 'https://xvkei.github.io/hueverb/',
+    image: {
+      src: 'public\\images\\hueverb.jpg',
+      alt: 'A framed Hueverb print titled Last Night on Earth: an abstract painting of pink, red, orange, purple and green brush strokes, drips and geometric shapes, made from the sound of the song',
+      width: 1200,
+      height: 1428,
+    },
+    status: 'personal project',
     featured: true,
     personalContribution:
-    "I built the web app's growth-data processing and anomaly detection, and designed the interactive D3.js visualizations that chart growth trends and flag abnormal points.",
+      "I designed and built it on my own in plain JavaScript, with no framework or build step: the Web Audio analysis that detects new sounds and measures their loudness, pitch, and roughness; a plugin system where each of the ten brushes is its own module; the stroke placement that keeps paintings balanced across the canvas; and the IndexedDB collection with framed print exports.",
   },
 ];
 

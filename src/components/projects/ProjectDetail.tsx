@@ -1,8 +1,9 @@
 import type { AppCtx } from '../../app/apps';
 import { featuredProjects } from '../../data/config';
-import { catalogNo, resolveAsset } from '../../lib/format';
+import { catalogNo } from '../../lib/format';
 import { safeHttpUrl } from '../../lib/url';
 import { ExtLink } from '../ui/ExtLink';
+import { SampleButton } from '../ui/SampleButton';
 import { SetupNote } from '../ui/SetupNote';
 import { TagList } from '../ui/TagList';
 
@@ -37,26 +38,14 @@ export function ProjectDetail({ ctx }: { ctx: AppCtx }) {
         </div>
         <h3 id={headingId}>{project.name}</h3>
         <p className="detail-lead">{project.shortDescription}</p>
-        {(repo || demo) && (
+        {(repo || demo || project.image) && (
           <div className="card-actions">
             {repo && <ExtLink className="btn btn-primary" href={repo}>View repository</ExtLink>}
             {demo && <ExtLink className="btn" href={demo}>Open live demo</ExtLink>}
+            {project.image && <SampleButton image={project.image} projectName={project.name} />}
           </div>
         )}
       </header>
-
-      {project.image && (
-        <figure className="detail-figure">
-          <img
-            src={resolveAsset(project.image.src)}
-            alt={project.image.alt}
-            width={project.image.width}
-            height={project.image.height}
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
-      )}
 
       {project.problem && (
         <section>

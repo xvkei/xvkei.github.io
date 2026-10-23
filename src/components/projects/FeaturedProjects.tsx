@@ -1,9 +1,10 @@
 import { Archive } from 'lucide-react';
 import type { AppCtx } from '../../app/apps';
 import { featuredProjects, type FeaturedProject } from '../../data/config';
-import { catalogNo, resolveAsset } from '../../lib/format';
+import { catalogNo } from '../../lib/format';
 import { safeHttpUrl } from '../../lib/url';
 import { ExtLink } from '../ui/ExtLink';
+import { SampleButton } from '../ui/SampleButton';
 import { SetupNote } from '../ui/SetupNote';
 import { TagList } from '../ui/TagList';
 
@@ -51,17 +52,6 @@ function ProjectCard({ project: p, index, onOpen }: { project: FeaturedProject; 
         {p.status && <span className="badge">{p.status}</span>}
         {p.placeholder && <span className="badge badge-placeholder">setup placeholder</span>}
       </div>
-      {p.image && (
-        <img
-          className="card-thumb"
-          src={resolveAsset(p.image.src)}
-          alt={p.image.alt}
-          width={p.image.width}
-          height={p.image.height}
-          loading="lazy"
-          decoding="async"
-        />
-      )}
       <h3 id={headingId}>{p.name}</h3>
       <p>{p.shortDescription}</p>
       <TagList items={p.technologies} label={`Technologies used in ${p.name}`} />
@@ -71,6 +61,7 @@ function ProjectCard({ project: p, index, onOpen }: { project: FeaturedProject; 
         </button>
         {repo && <ExtLink className="btn" href={repo}>Repository</ExtLink>}
         {demo && <ExtLink className="btn" href={demo}>Live demo</ExtLink>}
+        {p.image && <SampleButton image={p.image} projectName={p.name} />}
       </div>
     </article>
   );
