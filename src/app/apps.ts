@@ -1,8 +1,8 @@
 import type { LucideIcon } from 'lucide-react';
-import { Archive, FileCode, FileText, FolderOpen, Gamepad2, Mail, Music2, NotebookPen, SlidersHorizontal, StickyNote, Terminal, User } from 'lucide-react';
-import { music, notes } from '../data/config';
+import { Archive, BookHeart, FileCode, FileText, FolderOpen, Gamepad2, Mail, Music2, NotebookPen, SlidersHorizontal, StickyNote, Terminal, User } from 'lucide-react';
+import { guestbook, music, notes } from '../data/config';
 
-export type AppId = 'readme' | 'projects' | 'archive' | 'project' | 'about' | 'resume' | 'contact' | 'music' | 'notes' | 'arcade' | 'settings' | 'terminal';
+export type AppId = 'readme' | 'projects' | 'archive' | 'project' | 'about' | 'resume' | 'contact' | 'music' | 'notes' | 'guestbook' | 'arcade' | 'settings' | 'terminal';
 export type Tone = 'sage' | 'ochre' | 'rose' | 'charcoal' | 'paper';
 
 export type AppDef = {
@@ -37,6 +37,7 @@ const DEFS: AppDef[] = [
   { id: 'contact', label: 'Contact', fileName: 'contact.vcf', blurb: 'email and profiles', icon: Mail, tone: 'rose', listed: true, size: { w: 460, h: 420 }, pos: { x: 420, y: 110 } },
   { id: 'music', label: 'Now playing', fileName: 'now_playing.m3u', blurb: 'a little music player', icon: Music2, tone: 'rose', listed: true, size: { w: 480, h: 720 }, pos: { x: 600, y: 24 } },
   { id: 'notes', label: 'Notes', fileName: 'notes.md', blurb: 'short notes on learning and experiments', icon: NotebookPen, tone: 'ochre', listed: true, size: { w: 520, h: 500 }, pos: { x: 360, y: 90 } },
+  { id: 'guestbook', label: 'Guestbook', fileName: 'guestbook.txt', blurb: 'sign it on your way out', icon: BookHeart, tone: 'rose', listed: true, size: { w: 560, h: 640 }, pos: { x: 440, y: 48 } },
   { id: 'arcade', label: 'Arcade', fileName: 'arcade.exe', blurb: 'a few tiny games for a break', icon: Gamepad2, tone: 'sage', listed: true, size: { w: 500, h: 620 }, pos: { x: 470, y: 40 } },
   { id: 'settings', label: 'Settings', fileName: 'settings.app', blurb: 'themes and desktop preferences', icon: SlidersHorizontal, tone: 'paper', listed: true, size: { w: 440, h: 440 }, pos: { x: 520, y: 80 } },
   { id: 'terminal', label: 'Terminal', fileName: 'terminal.app', blurb: 'optional shortcuts by command', icon: Terminal, tone: 'charcoal', listed: true, size: { w: 600, h: 400 }, pos: { x: 420, y: 200 } },
@@ -53,6 +54,7 @@ export function isAppId(value: string): value is AppId {
 export function isAppEnabled(id: AppId): boolean {
   if (id === 'notes') return notes.enabled && notes.items.length > 0;
   if (id === 'music') return music.items.length > 0;
+  if (id === 'guestbook') return Boolean(guestbook.url && guestbook.publishableKey);
   return true;
 }
 

@@ -1087,3 +1087,110 @@
   font-size: 0.8125rem;
   color: var(--text-muted);
 }
+/* guestbook */
+.gb-form {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.9rem 1rem 1rem;
+  background: var(--paper-deep);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+.gb-form textarea {
+  width: 100%;
+  min-height: 96px;
+  padding: 0.5rem 0.6rem;
+  font: inherit;
+  font-size: 0.875rem;
+  resize: vertical;
+  background: var(--card);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+}
+.gb-count {
+  justify-self: end;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.gb-trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.gb-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+}
+.gb-submit,
+.gb-retry {
+  padding: 0.45rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 3px;
+  box-shadow: var(--shadow-hard);
+  cursor: pointer;
+}
+.gb-submit {
+  color: #fff;
+  background: var(--rose-deep);
+  border: 1px solid var(--rose-deep);
+}
+.gb-submit:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.gb-retry {
+  margin-top: 0.5rem;
+  color: var(--charcoal);
+  background: var(--paper);
+  border: 1px solid var(--border-strong);
+}
+.gb-retry:hover {
+  background: var(--surface-hi);
+}
+.gb-status {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.gb-status.is-ok {
+  color: var(--sage-ink);
+}
+.gb-status.is-err {
+  color: var(--rose-ink);
+}
+.gb-list {
+  display: grid;
+  gap: 0.7rem;
+}
+.gb-entry {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.8rem 1rem;
+  background: var(--note);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-hard);
+}
+.gb-entry.is-new {
+  border-left: 4px solid var(--rose-deep);
+}
+.gb-message {
+  font-family: var(--font-serif);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.gb-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+.gb-name {
+  font-weight: 600;
+  color: var(--charcoal);
+}

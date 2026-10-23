@@ -17,6 +17,7 @@ const HELP: Array<[string, string]> = [
   ['about', 'about me'],
   ['resume', 'resume'],
   ['contact', 'contact details'],
+  ['guestbook', 'sign the guestbook'],
   ['whoami', 'who runs this desktop'],
   ['date', 'your local date and time'],
   ['theme [name]', 'linen, night or system'],
@@ -35,7 +36,7 @@ const ALIASES = new Map<string, AppId>([
   ['about', 'about'], ['resume', 'resume'], ['cv', 'resume'],
   ['contact', 'contact'], ['email', 'contact'],
   ['readme', 'readme'], ['notes', 'notes'], ['music', 'music'], ['arcade', 'arcade'], ['games', 'arcade'], ['terminal', 'terminal'],
-  ['settings', 'settings'],
+  ['settings', 'settings'], ['guestbook', 'guestbook'], ['sign', 'guestbook'],
 ]);
 
 const THEME_NAMES = new Map<string, ThemePref>([

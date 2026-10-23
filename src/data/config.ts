@@ -275,3 +275,17 @@ export const music: { items: ListeningItem[] } = {
     { title: 'Luna (2011 Remaster)', artist: 'The Smashing Pumpkins', note: '<3', url: 'https://youtu.be/dIdiuPPD69E?si=cU5eOmWBCNJoqzi2'},
   ],
 };
+
+/* ── 8. guestbook (Supabase) ──────────────────────────────── */
+// Entries live in a Supabase table. The URL and publishable key are public
+// by design: the database's row level security rules decide what visitors
+// can do (read and sign, never edit or delete).
+// NEVER put the secret / service_role key here.
+// Leave url or publishableKey empty to hide the guestbook.
+
+export const guestbook = {
+  url: 'https://dfjbuypqgtqlionlysst.supabase.co',
+  publishableKey: 'sb_publishable_obuYSxNKhKBVuiCdD8NEWw_QH1lGO0i',
+  nameMax: 32, // keep in sync with the SQL check constraints
+  messageMax: 500,
+};
