@@ -3,7 +3,7 @@
 A cozy personal-computer portfolio. On wide screens it's a desktop with draggable,
 resizable windows; on phones and tablets it becomes a single-column launcher with
 full-screen panels and a bottom dock. There's also a small arcade for a coffee
-break, a guestbook to sign, and light and dark themes.
+break, a guestbook to sign, hidden achievements to find, and light and dark themes.
 
 Built with React, TypeScript, Vite, plain CSS and lucide-react icons.
 Live at [xvkei.github.io](https://xvkei.github.io).
@@ -128,6 +128,22 @@ Thursday to keep it awake, and can also be run by hand from the Actions tab.
 GitHub turns off scheduled workflows in repos with no commits for 60 days; if
 that happens, re-enable it in the Actions tab.
 
+## Achievements
+
+Little secrets hidden around the desktop reward visitors for exploring, not
+just for playing the games. Unlocking one shows an "achievement unlocked"
+pop-up, and `achievements.log` lists everything found so far, with locked
+ones shown as "???" plus a small hint. Open it from the start menu, the
+mobile home screen, or `achievements` in the terminal.
+
+- The list lives in `src/lib/achievements.ts`. Each achievement has a name,
+  a description (shown once unlocked) and a hint (shown while locked).
+- To unlock one from anywhere in the code, call `unlock('id')`. It returns
+  `true` the first time, so callers can react to a fresh unlock.
+- Progress is saved in localStorage under `haya.achievements.v1`, and the
+  apps a visitor has opened under `haya.explored.v1`. A "start over" button
+  in `achievements.log` resets both.
+
 ## Terminal
 
 `terminal.app` is an optional way to get around. Input is only ever matched
@@ -135,17 +151,20 @@ against a fixed list of commands, never evaluated. Type `help` to see them all:
 
 - `ls`, `open <name>`, or just an app's name (`projects`, `resume`,
   `contact`, `guestbook`, …) to open windows
+- `achievements` to see the secrets you've found
 - `theme [linen | night | system]` to switch themes
 - `games` to open the arcade, plus `coinflip`, `roll [sides]` and
   `guess [n]` (a 1–100 number guessing game)
 - `whoami`, `date`, `clear`, and `reboot` to replay the boot screen
 
+There may also be a command or two that `help` doesn't mention.
+
 ## Privacy
 
-There are no analytics, cookies or accounts. Arcade scores, the theme choice,
-and the name you last signed the guestbook with stay in your own browser's
-storage. The only thing sent anywhere is a guestbook entry you choose to post,
-which goes to Supabase and is shown publicly.
+There are no analytics, cookies or accounts. Arcade scores, achievements, the
+theme choice, and the name you last signed the guestbook with stay in your own
+browser's storage. The only thing sent anywhere is a guestbook entry you choose
+to post, which goes to Supabase and is shown publicly.
 
 ## Deploying
 
@@ -171,15 +190,17 @@ src/
     mobile/       launcher, full-screen panels, dock
     projects/     featured projects, detail view, GitHub archive
     apps/         about, resume, contact, notes, now playing, guestbook,
-                  settings, readme, terminal
+                  achievements, settings, readme, terminal
       arcade/     arcade window, tic-tac-toe, minesweeper, memory, best scores
-    ui/           small shared pieces (links, tags, sample viewer)
+    ui/           small shared pieces (links, tags, sample viewer,
+                  achievement pop-up)
   data/           config.ts (edit me) + derived links
   lib/
-    github/       API client, normalisation, cache, filtering, hook
-    guestbook.ts  Supabase client for the guestbook
-    theme.ts      theme store
-    boot.ts       boot screen state
+    github/          API client, normalisation, cache, filtering, hook
+    guestbook.ts     Supabase client for the guestbook
+    achievements.ts  achievement list and progress store
+    theme.ts         theme store
+    boot.ts          boot screen state
   styles/         tokens, base, desktop, window, apps, mobile
 public/           favicon, resume PDF, project images
 supabase/         guestbook.sql (database setup)
@@ -202,3 +223,8 @@ The guestbook form has labelled fields and a character counter, and loading,
 errors and successful signatures are announced to screen readers. The
 View sample lightbox uses a native `<dialog>`, so focus stays inside while
 it's open, Escape closes it, and focus returns to the button afterwards.
+
+Achievement pop-ups are announced to screen readers, can be dismissed with a
+button, and disappear on their own after a few seconds; everything they say
+is also listed in `achievements.log`, where locked entries are labelled as
+locked rather than read out as "???".
