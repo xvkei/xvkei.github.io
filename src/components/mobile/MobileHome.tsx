@@ -1,13 +1,15 @@
-import { Archive } from 'lucide-react';
+import { Archive, Trophy } from 'lucide-react';
 import { APPS, type AppCtx } from '../../app/apps';
 import { featuredProjects, site } from '../../data/config';
 import { catalogNo } from '../../lib/format';
 import { AppTile } from '../desktop/AppTile';
 import { SetupNote } from '../ui/SetupNote';
+import { useAchievements } from '../../lib/achievements';
 
 export function MobileHome({ ctx }: { ctx: AppCtx }) {
   const featured = featuredProjects.filter((p) => p.featured);
   const identity = [site.fullName, site.role].filter(Boolean).join(' · ');
+  const { found, total } = useAchievements();
 
   return (
     <main className="m-home">
@@ -48,6 +50,9 @@ export function MobileHome({ ctx }: { ctx: AppCtx }) {
         )}
         <button type="button" className="btn btn-block" onClick={() => ctx.openApp('archive')}>
           <Archive size={16} aria-hidden="true" /> Browse all public repositories
+        </button>
+        <button type="button" className="btn btn-block" data-app-icon="achievements" onClick={() => ctx.openApp('achievements')}>
+          <Trophy size={16} aria-hidden="true" /> achievements · {found}/{total} found
         </button>
       </section>
 

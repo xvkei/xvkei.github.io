@@ -1,8 +1,8 @@
 import type { LucideIcon } from 'lucide-react';
-import { Archive, BookHeart, FileCode, FileText, FolderOpen, Gamepad2, Mail, Music2, NotebookPen, SlidersHorizontal, StickyNote, Terminal, User } from 'lucide-react';
+import { Archive, BookHeart, FileCode, FileText, FolderOpen, Gamepad2, Mail, Music2, NotebookPen, SlidersHorizontal, StickyNote, Terminal, Trophy, User } from 'lucide-react';
 import { guestbook, music, notes } from '../data/config';
 
-export type AppId = 'readme' | 'projects' | 'archive' | 'project' | 'about' | 'resume' | 'contact' | 'music' | 'notes' | 'guestbook' | 'arcade' | 'settings' | 'terminal';
+export type AppId = 'readme' | 'projects' | 'archive' | 'project' | 'about' | 'resume' | 'contact' | 'music' | 'notes' | 'guestbook' | 'arcade' | 'settings' | 'terminal' | 'achievements';
 export type Tone = 'sage' | 'ochre' | 'rose' | 'charcoal' | 'paper';
 
 export type AppDef = {
@@ -42,6 +42,7 @@ const DEFS: AppDef[] = [
   { id: 'settings', label: 'Settings', fileName: 'settings.app', blurb: 'themes and desktop preferences', icon: SlidersHorizontal, tone: 'paper', listed: true, size: { w: 440, h: 440 }, pos: { x: 520, y: 80 } },
   { id: 'terminal', label: 'Terminal', fileName: 'terminal.app', blurb: 'optional shortcuts by command', icon: Terminal, tone: 'charcoal', listed: true, size: { w: 600, h: 400 }, pos: { x: 420, y: 200 } },
   { id: 'project', label: 'Project details', fileName: 'project.md', blurb: '', icon: FileCode, tone: 'paper', listed: false, size: { w: 640, h: 600 }, pos: { x: 400, y: 32 } },
+  { id: 'achievements', label: 'Achievements', fileName: 'achievements.log', blurb: 'secrets found around the desktop', icon: Trophy, tone: 'ochre', listed: false, size: { w: 440, h: 560 }, pos: { x: 500, y: 60 } },
 ];
 
 export const APP_BY_ID = Object.fromEntries(DEFS.map((d) => [d.id, d])) as Record<AppId, AppDef>;

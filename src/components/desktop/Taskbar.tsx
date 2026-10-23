@@ -6,8 +6,9 @@ import { githubProfileUrl } from '../../data/links';
 import { ExtLink } from '../ui/ExtLink';
 import { AppTile } from './AppTile';
 import { Clock } from './Clock';
-import { LayoutGrid, Moon, Sun } from 'lucide-react';
+import { LayoutGrid, Moon, Sun, Trophy } from 'lucide-react';
 import { useTheme } from '../../lib/theme';
+import { useAchievements } from '../../lib/achievements';
 
 type Props = {
   wm: WmState;
@@ -24,6 +25,7 @@ export function Taskbar({ wm, activeId, projectTitle, onTaskClick, onOpen }: Pro
   const profile = githubProfileUrl();
   const { theme, setPref } = useTheme();
   const nextTheme = theme === 'night' ? 'linen' : 'night';
+  const { found, total } = useAchievements();
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -97,6 +99,13 @@ export function Taskbar({ wm, activeId, projectTitle, onTaskClick, onOpen }: Pro
                   </li>
                 ))}
               </ul>
+              <div className="start-extra">
+                <button type="button" className="start-item" onClick={() => choose('achievements')}>
+                  <Trophy size={16} aria-hidden="true" />
+                  <span>achievements</span>
+                  <span className="start-item-file mono">{found}/{total}</span>
+                </button>
+              </div>
               {profile && (
                 <div className="start-foot">
                   <ExtLink href={profile} className="start-item">github.com/{github.username}</ExtLink>

@@ -13,6 +13,7 @@ import { Terminal } from './Terminal';
 import { Arcade } from './arcade/Arcade';
 import { Settings } from './Settings';
 import { Guestbook } from './Guestbook';
+import { Achievements } from './Achievements';
 
 /** Memoised so dragging/focusing windows never re-renders their contents. */
 export const AppContent = memo(function AppContent({ id, ctx }: { id: AppId; ctx: AppCtx }) {
@@ -37,6 +38,8 @@ export const AppContent = memo(function AppContent({ id, ctx }: { id: AppId; ctx
       return <Notes />;
     case 'arcade':
       return <Arcade />;
+    case 'achievements':
+      return <Achievements />;
     case 'settings':
       return <Settings />;
     case 'terminal':

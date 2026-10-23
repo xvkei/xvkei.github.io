@@ -3,6 +3,7 @@ import { APPS, APP_BY_ID, isAppEnabled, type AppCtx, type AppId } from '../../ap
 import { site } from '../../data/config';
 import { getThemePref, setThemePref, type ThemePref } from '../../lib/theme';
 import { requestReboot } from '../../lib/boot';
+import { unlock } from '../../lib/achievements';  
 
 type Line = { id: number; kind: 'in' | 'out' | 'err'; text: string };
 
@@ -18,6 +19,7 @@ const HELP: Array<[string, string]> = [
   ['resume', 'resume'],
   ['contact', 'contact details'],
   ['guestbook', 'sign the guestbook'],
+  ['achievements', 'see the secrets you have found'],
   ['whoami', 'who runs this desktop'],
   ['date', 'your local date and time'],
   ['theme [name]', 'linen, night or system'],
@@ -36,7 +38,7 @@ const ALIASES = new Map<string, AppId>([
   ['about', 'about'], ['resume', 'resume'], ['cv', 'resume'],
   ['contact', 'contact'], ['email', 'contact'],
   ['readme', 'readme'], ['notes', 'notes'], ['music', 'music'], ['arcade', 'arcade'], ['games', 'arcade'], ['terminal', 'terminal'],
-  ['settings', 'settings'], ['guestbook', 'guestbook'], ['sign', 'guestbook'],
+  ['settings', 'settings'], ['guestbook', 'guestbook'], ['sign', 'guestbook'], ['achievements', 'achievements'], ['trophies', 'achievements'],
 ]);
 
 const THEME_NAMES = new Map<string, ThemePref>([
@@ -114,6 +116,10 @@ export function Terminal({ ctx }: { ctx: AppCtx }) {
         setLines([]);
         return;
             case 'games':
+      case 'sudo':
+        fail('sudo: nice try. this incident will be reported.');
+        unlock('hacker-voice');
+        break;
       case 'play':
         target = 'arcade';
         break;
@@ -148,6 +154,7 @@ export function Terminal({ ctx }: { ctx: AppCtx }) {
         else if (n > game.secret) say(`${n} is too high.`);
         else {
           say(`yes! it was ${game.secret}. you got it in ${game.tries} ${game.tries === 1 ? 'try' : 'tries'}.`);
+          if (game.tries <= 7) unlock('mind-reader');
           guessGame.current = null;
         }
         break;
@@ -166,10 +173,12 @@ export function Terminal({ ctx }: { ctx: AppCtx }) {
         say(`theme set to ${next}.`);
         break;
       }
-      case 'reboot':
+      case 'reboot': {
         say('rebooting…');
-        window.setTimeout(requestReboot, 400);
+        const fresh = unlock('turn-it-off');
+        window.setTimeout(requestReboot, fresh ? 1800 : 400);
         break;
+      }
       default: {
         const app = args.length === 0 ? resolveApp(cmd) : null;
         if (app) target = app;

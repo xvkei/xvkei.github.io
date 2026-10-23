@@ -1,7 +1,9 @@
 import { useSyncExternalStore } from 'react';
+import { unlock } from './achievements';
 
 export type Theme = 'linen' | 'night';
 export type ThemePref = Theme | 'system';
+
 
 export const THEME_OPTIONS: Array<{ id: ThemePref; label: string; blurb: string }> = [
   { id: 'system', label: 'match my device', blurb: 'follows your light or dark mode setting' },
@@ -58,6 +60,7 @@ export function setThemePref(next: ThemePref) {
     /* storage blocked: still applies for this visit */
   }
   apply();
+  if (theme === 'night') unlock('night-owl');
 }
 
 function subscribe(listener: () => void) {

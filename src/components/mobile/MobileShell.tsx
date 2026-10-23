@@ -6,6 +6,8 @@ import { parseHash, toHash, type Route } from '../../app/routes';
 import { featuredProjects, site } from '../../data/config';
 import { AppContent } from '../apps/AppContent';
 import { MobileHome } from './MobileHome';
+import { noteAppOpened } from '../../lib/achievements';
+import { AchievementToast } from '../ui/AchievementToast';
 
 type DockItem = { id: AppId | 'home'; label: string; icon: LucideIcon };
 const DOCK: DockItem[] = [
@@ -33,6 +35,11 @@ export function MobileShell() {
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
+
+    // count every app that gets opened (Explorer achievement)
+  useEffect(() => {
+    if (route) noteAppOpened(route.app);
+  }, [route]);
 
   const navigate = useCallback((next: Route) => {
     const hash = toHash(next);
@@ -122,6 +129,7 @@ export function MobileShell() {
           </button>
         ))}
       </nav>
+      <AchievementToast />
     </div>
   );
 }

@@ -7,6 +7,8 @@ import { AppContent } from '../apps/AppContent';
 import { Window } from '../window/Window';
 import { DesktopIcon } from './DesktopIcon';
 import { Taskbar } from './Taskbar';
+import { noteAppOpened } from '../../lib/achievements';
+import { AchievementToast } from '../ui/AchievementToast';
 
 
 const TASKBAR_H = 46; // keep in sync with --taskbar-h
@@ -87,6 +89,15 @@ export function DesktopShell() {
     };
   }, [getBounds]);
 
+    // count every app that gets opened, however it was opened (Explorer achievement)
+  const openKey = ALL_APP_IDS.filter((id) => wm.wins[id].open).join(' ');
+  useEffect(() => {
+    openKey
+      .split(' ')
+      .filter(Boolean)
+      .forEach((id) => noteAppOpened(id as AppId));
+  }, [openKey]);
+
   const ctx: AppCtx = useMemo(() => ({ mode: 'desktop', openApp, openProject, projectId }), [openApp, openProject, projectId]);
 
   const project = featuredProjects.find((p) => p.id === projectId) ?? null;
@@ -149,6 +160,7 @@ export function DesktopShell() {
       </div>
 
       <Taskbar wm={wm} activeId={activeId} projectTitle={projectTitle} onTaskClick={onTaskClick} onOpen={openApp} />
+      <AchievementToast />
     </div>
   );
 }

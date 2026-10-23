@@ -1271,3 +1271,152 @@
     transform: translateY(8px);
   }
 }
+/* achievements */
+.achv-progress {
+  display: grid;
+  gap: 0.4rem;
+}
+.achv-count {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+.achv-count strong {
+  font-size: 1rem;
+  color: var(--charcoal);
+}
+.achv-bar {
+  height: 8px;
+  overflow: hidden;
+  background: var(--paper-deep);
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+}
+.achv-bar span {
+  display: block;
+  height: 100%;
+  background: var(--ochre);
+  transition: width var(--dur) var(--ease);
+}
+.achv-list {
+  display: grid;
+  gap: 0.5rem;
+}
+.achv-item {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  align-items: start;
+  gap: 0.75rem;
+  padding: 0.65rem 0.8rem;
+  color: var(--text-muted);
+  background: var(--card);
+  border: 1px dashed var(--border-strong);
+  border-radius: 3px;
+}
+.achv-item.is-unlocked {
+  color: var(--charcoal);
+  border-style: solid;
+  box-shadow: var(--shadow-hard);
+}
+.achv-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  background: var(--paper-deep);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+.achv-item.is-unlocked .achv-icon {
+  color: var(--ochre-ink);
+  background: var(--ochre-soft);
+}
+.achv-name {
+  font-weight: 600;
+}
+.achv-desc {
+  font-size: 0.85rem;
+}
+.achv-date {
+  margin-top: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* achievement pop-up */
+.achv-toast-region {
+  position: fixed;
+  right: 16px;
+  bottom: calc(var(--taskbar-h) + 16px);
+  z-index: 50;
+  pointer-events: none;
+}
+.m-shell .achv-toast-region {
+  right: 12px;
+  bottom: calc(88px + env(safe-area-inset-bottom));
+  left: 12px;
+}
+.achv-toast {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.75rem;
+  width: min(340px, calc(100vw - 32px));
+  padding: 0.75rem 0.6rem 0.75rem 0.85rem;
+  background: var(--paper);
+  border: 1px solid var(--border-strong);
+  border-left: 4px solid var(--ochre);
+  border-radius: 3px;
+  box-shadow: var(--shadow-hard), var(--shadow-soft);
+  pointer-events: auto;
+}
+.m-shell .achv-toast {
+  width: 100%;
+}
+.achv-toast-icon {
+  margin-top: 2px;
+  color: var(--ochre-ink);
+}
+.achv-toast-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ochre-ink);
+}
+.achv-toast-name {
+  font-weight: 650;
+  color: var(--charcoal);
+}
+.achv-toast-desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+.achv-toast-close {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.achv-toast-close:hover {
+  background: var(--surface-hi);
+  border-color: var(--border);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .achv-toast {
+    animation: achv-in 220ms ease-out;
+  }
+}
+@keyframes achv-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}

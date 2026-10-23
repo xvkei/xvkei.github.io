@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useId, useState, type FormEvent } from 'react';
 import { guestbook } from '../../data/config';
 import { fetchEntries, signGuestbook, type GuestbookEntry } from '../../lib/guestbook';
+import { unlock } from '../../lib/achievements';
 
 const NAME_KEY = 'haya.guestbook.name';
 const LAST_KEY = 'haya.guestbook.last';
@@ -100,6 +101,7 @@ export function Guestbook() {
       writeStore(NAME_KEY, n);
       writeStore(LAST_KEY, String(Date.now()));
       setNote({ kind: 'ok', text: 'signed! thanks for stopping by.' });
+      unlock('signed');
     } catch (err) {
       setNote({ kind: 'err', text: errorText(err) });
     } finally {
