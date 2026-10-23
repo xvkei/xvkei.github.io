@@ -1,12 +1,19 @@
 import { Check, Lock } from 'lucide-react';
 import { APPS } from '../../app/apps';
-import { ACHIEVEMENTS, resetAchievements, useAchievements } from '../../lib/achievements';
+import { ACHIEVEMENTS, FEATURED_IDS, projectsViewed, resetAchievements, useAchievements } from '../../lib/achievements';
 
 const dateFmt = new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
 
 export function Achievements() {
   const { unlocked, explored, found, total } = useAchievements();
   const opened = APPS.filter((a) => explored.has(a.id)).length;
+  const viewed = projectsViewed(explored);
+
+  const progress = (id: string) => {
+    if (id === 'explorer') return ` (${opened}/${APPS.length} opened)`;
+    if (id === 'curator') return ` (${viewed}/${FEATURED_IDS.length} viewed)`;
+    return '';
+  };
 
   return (
     <div className="app achievements">
@@ -42,7 +49,7 @@ export function Achievements() {
                 </p>
                 <p className="achv-desc">
                   {at ? a.description : a.hint}
-                  {!at && a.id === 'explorer' && ` (${opened}/${APPS.length} opened)`}
+                  {!at && progress(a.id)}
                 </p>
                 {at && <p className="achv-date">found {dateFmt.format(at)}</p>}
               </div>

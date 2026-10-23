@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { Trophy, X } from 'lucide-react';
-import { dismissToast, useAchievements } from '../../lib/achievements';
+import { dismissToast, unlock, useAchievements } from '../../lib/achievements';
+
+const KONAMI = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'].join(' ');
 
 export function AchievementToast() {
   const { toast } = useAchievements();
@@ -10,6 +12,22 @@ export function AchievementToast() {
     const timer = window.setTimeout(dismissToast, 6000);
     return () => window.clearTimeout(timer);
   }, [toast]);
+
+  // ↑ ↑ ↓ ↓ ← → ← → B A, anywhere on the page
+  useEffect(() => {
+    const recent: string[] = [];
+    const onKey = (e: KeyboardEvent) => {
+      if (e.repeat) return;
+      recent.push(e.key.toLowerCase());
+      if (recent.length > 10) recent.shift();
+      if (recent.join(' ') === KONAMI) {
+        recent.length = 0;
+        unlock('konami');
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   return (
     <div className="achv-toast-region" role="status" aria-live="polite">

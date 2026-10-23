@@ -1,6 +1,7 @@
 import type { LucideIcon } from 'lucide-react';
 import { Braces, Bug, Coffee, Cpu, Database, GitBranch, Keyboard, Terminal as TerminalIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { unlock } from '../../../lib/achievements';
 import { getBest, saveBest } from './scores';
 
 type Card = { key: number; face: number; matched: boolean };
@@ -16,6 +17,7 @@ const FACES: Array<{ name: string; icon: LucideIcon }> = [
   { name: 'keyboard', icon: Keyboard },
 ];
 const FLIP_BACK_MS = 900;
+const ELEPHANT_MOVES = 12;
 const INTRO = `find all ${FACES.length} pairs in as few moves as you can.`;
 
 function deal(): Card[] {
@@ -69,6 +71,7 @@ export function Memory() {
       const isBest = saveBest('memory', n);
       if (isBest) setBest(n);
       setMessage(`all pairs found in ${n} moves.${isBest ? ' new best!' : ''}`);
+      if (n <= ELEPHANT_MOVES) unlock('elephant-memory');
     } else {
       setMessage(`match: ${name}.`);
     }

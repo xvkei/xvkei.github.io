@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import type { AppCtx } from '../../app/apps';
 import { featuredProjects } from '../../data/config';
+import { noteProjectViewed } from '../../lib/achievements';
 import { catalogNo } from '../../lib/format';
 import { safeHttpUrl } from '../../lib/url';
 import { ExtLink } from '../ui/ExtLink';
@@ -10,6 +12,12 @@ import { TagList } from '../ui/TagList';
 export function ProjectDetail({ ctx }: { ctx: AppCtx }) {
   const index = featuredProjects.findIndex((p) => p.id === ctx.projectId);
   const project = index >= 0 ? featuredProjects[index] : null;
+  const viewedId = project?.id ?? null;
+
+  // counts toward the Curator achievement
+  useEffect(() => {
+    if (viewedId) noteProjectViewed(viewedId);
+  }, [viewedId]);
 
   if (!project) {
     return (

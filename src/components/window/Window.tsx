@@ -3,6 +3,7 @@ import type { LucideIcon } from 'lucide-react';
 import { Copy, Minus, Square, X } from 'lucide-react';
 import { APP_BY_ID, type AppId } from '../../app/apps';
 import { MIN_SIZE, WINDOW_MARGIN, type Rect, type WinState } from '../../app/windows';
+import { unlock } from '../../lib/achievements';
 
 type Props = {
   id: AppId;
@@ -148,6 +149,8 @@ export function Window({ id, title, fileName, icon: Icon, win, active, onFocus, 
     if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
     onResize(id, r.rect);
     setLiveRect(null);
+    // only a real change in size counts, not a click on an edge
+    if (r.rect.w !== r.origin.w || r.rect.h !== r.origin.h) unlock('interior-designer');
   };
 
   const resetSize = () => onResize(id, { x: win.x, y: win.y, ...APP_BY_ID[id].size });

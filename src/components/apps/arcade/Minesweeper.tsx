@@ -1,5 +1,6 @@
 import { Bomb, Flag } from 'lucide-react';
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { unlock } from '../../../lib/achievements';
 import { getBest, saveBest } from './scores';
 
 type Level = 'easy' | 'normal';
@@ -126,6 +127,7 @@ export function Minesweeper() {
       const isBest = saveBest(`mines-${level}`, seconds);
       if (isBest) setBest(seconds);
       setMessage(`cleared in ${seconds}s.${isBest ? ' new best!' : ''}`);
+      unlock('sweeper');
       return;
     }
     setCells(board);

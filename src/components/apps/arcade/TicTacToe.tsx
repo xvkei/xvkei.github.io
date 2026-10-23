@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { unlock } from '../../../lib/achievements';
 
 type Mark = 'X' | 'O';
 type Cell = Mark | null;
@@ -87,7 +88,10 @@ export function TicTacToe() {
       const next = place(board, cpuMove(board, level), CPU);
       setBoard(next);
       const r = getResult(next);
-      if (r) setTally((prev) => tallyFor(prev, r));
+      if (r) {
+        setTally((prev) => tallyFor(prev, r));
+        if (r.winner === null && level === 'unbeatable') unlock('stalemate');
+      }
     }, CPU_DELAY_MS);
     return () => window.clearTimeout(t);
   }, [cpuTurn, board, level]);
@@ -97,7 +101,10 @@ export function TicTacToe() {
     const next = place(board, i, YOU);
     setBoard(next);
     const r = getResult(next);
-    if (r) setTally((prev) => tallyFor(prev, r));
+    if (r) {
+      setTally((prev) => tallyFor(prev, r));
+      if (r.winner === null && level === 'unbeatable') unlock('stalemate');
+    }
   };
 
   const newRound = () => {
