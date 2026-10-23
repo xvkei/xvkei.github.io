@@ -1,11 +1,12 @@
 # haya.exe
 
-A cozy personal-computer portfolio. On wide screens it's a desktop with draggable
-windows; on phones and tablets it becomes a single-column launcher with
-full-screen panels and a bottom dock. There's also a small arcade for a
-coffee break.
+A cozy personal-computer portfolio. On wide screens it's a desktop with draggable,
+resizable windows; on phones and tablets it becomes a single-column launcher with
+full-screen panels and a bottom dock. There's also a small arcade for a coffee
+break, a guestbook to sign, and light and dark themes.
 
 Built with React, TypeScript, Vite, plain CSS and lucide-react icons.
+Live at [xvkei.github.io](https://xvkei.github.io).
 
 ## Setup
 
@@ -39,15 +40,37 @@ Anything left empty is hidden, or shown as a labelled "setup placeholder".
   `cacheMinutes` (results are cached in sessionStorage to stay under GitHub's
   unauthenticated rate limit).
 - **Featured projects:** edit `featuredProjects`. Delete `placeholder: true`
-  once an entry is real. Screenshots go in `public/images/` and are referenced
-  as `images/file.png` with their real width and height.
+  once an entry is real. Images go in `public/images/` and are referenced as
+  `images/file.jpg` with their real width and height. A project with an image
+  gets a **View sample** button on its card and detail view, which opens the
+  image large in a lightbox. Keep images around 1200 px wide and under
+  ~300 KB.
 - **Resume:** put the PDF at `public/resume.pdf` and set
   `resume.pdfPath: 'resume.pdf'`. `summary`, `experience` and `education`
   fill the readable HTML version.
 - **Contact:** `contact.email`, `contact.linkedin`, `contact.other`. Unset
   links are hidden. GitHub appears automatically once the username is set.
 - **Notes / Now playing:** optional; hidden until they have content (`notes`
-  also needs `enabled: true`). Now playing is a listening card, never audio.
+  also needs `enabled: true`). Now playing is a small music player that plays
+  each track's YouTube link in an embedded player.
+- **Guestbook:** `guestbook.url` and `guestbook.publishableKey` from your
+  Supabase project. Hidden while either is empty. See [Guestbook](#guestbook).
+
+## Desktop
+
+- **Windows** drag by the title bar and resize from any edge or corner
+  (minimum 300×200). Double-click an edge to reset a window's size. Dragging
+  and resizing only work with a mouse or pen, never on touch.
+- **Themes:** linen (light), night (dark), or "match my device", which follows
+  the system setting live. Change it in `settings.app`, with the sun/moon
+  button in the taskbar, or with `theme [name]` in the terminal. The choice is
+  saved in localStorage under `haya.theme`, and a small inline script in
+  `index.html` applies it before the first paint, so there's no flash of the
+  wrong theme. All colours come from CSS variables in `src/styles/tokens.css`.
+- **Boot screen:** a short startup sequence that waits for "press any key to
+  enter". It shows once per browser session (sessionStorage `haya.booted`),
+  and is skipped for deep links (URLs that open a specific app) and for
+  visitors who prefer reduced motion. `reboot` in the terminal replays it.
 
 ## Arcade
 
@@ -63,37 +86,104 @@ no extra dependencies:
 Best times and move counts are saved in localStorage under `arcade.best.v1`,
 so they stay on the visitor's device and nothing is sent anywhere.
 
-The terminal has a few extras too: `games` opens the arcade, plus `coinflip`,
-`roll [sides]` and `guess [n]` (a 1–100 number guessing game).
+## Guestbook
+
+`guestbook.txt` lets visitors pick a name and leave a message, no account
+needed. Every entry is public and shown newest first.
+
+Entries are stored in a [Supabase](https://supabase.com) table and read and
+written straight from the browser with plain `fetch` (no SDK), in
+`src/lib/guestbook.ts`.
+
+**Setup**
+
+1. Create a free Supabase project.
+2. Open the SQL Editor, paste in `supabase/guestbook.sql`, and run it. This
+   creates the table, its row level security policies and a small trigger.
+3. Copy the Project URL and the publishable key (`sb_publishable_…`) into
+   `guestbook` in `src/data/config.ts`.
+
+Both values are public by design: the database's row level security decides
+what visitors can do, which is read entries and add new ones, never edit or
+delete. **Never** put the secret or `service_role` key in the site.
+
+**Limits and spam protection**
+
+- Names are 1–32 characters and messages 1–500, enforced by the database.
+  Visitors can only fill in `name` and `message`; the id and date are set by
+  the database, so they can't be faked.
+- A trigger trims extra spaces and allows at most 10 new entries per minute
+  across the whole site.
+- A hidden honeypot field catches basic bots, and each browser has a
+  60-second cooldown between signatures.
+- React escapes everything visitors type, so messages can't inject HTML or
+  scripts.
+
+**Moderation:** delete entries from the Supabase Table Editor (tick the row,
+then delete).
+
+**Keep-alive:** free Supabase projects pause after a week without activity.
+`.github/workflows/supabase-keepalive.yml` reads one row every Monday and
+Thursday to keep it awake, and can also be run by hand from the Actions tab.
+GitHub turns off scheduled workflows in repos with no commits for 60 days; if
+that happens, re-enable it in the Actions tab.
+
+## Terminal
+
+`terminal.app` is an optional way to get around. Input is only ever matched
+against a fixed list of commands, never evaluated. Type `help` to see them all:
+
+- `ls`, `open <name>`, or just an app's name (`projects`, `resume`,
+  `contact`, `guestbook`, …) to open windows
+- `theme [linen | night | system]` to switch themes
+- `games` to open the arcade, plus `coinflip`, `roll [sides]` and
+  `guess [n]` (a 1–100 number guessing game)
+- `whoami`, `date`, `clear`, and `reboot` to replay the boot screen
+
+## Privacy
+
+There are no analytics, cookies or accounts. Arcade scores, the theme choice,
+and the name you last signed the guestbook with stay in your own browser's
+storage. The only thing sent anywhere is a guestbook entry you choose to post,
+which goes to Supabase and is shown publicly.
 
 ## Deploying
 
 `npm run build` produces a static site in `dist/`.
 
+- **GitHub Pages (this repo):** a GitHub Actions workflow in
+  `.github/workflows/` builds and deploys on every push to `main`.
+  `vite.config.ts` uses `base: './'`, so the build also works from a
+  repository sub-path.
 - **Netlify / Vercel / Cloudflare Pages:** build command `npm run build`,
   output directory `dist`. If you use the env var instead of editing
   config.ts, add `VITE_GITHUB_USERNAME` in the host's settings.
-- **GitHub Pages:** `vite.config.ts` uses `base: './'`, so the build works
-  from a repository sub-path. Publish the contents of `dist/` (for example
-  with the official "Deploy static content to Pages" GitHub Action).
 
 ## Structure
 
 ```
 src/
-  app/          app registry, window manager reducer, hash routes
+  app/            app registry, window manager reducer, hash routes
   components/
-    desktop/    desktop shell, icons, taskbar, start menu
-    window/     draggable window frame
-    mobile/     launcher, full-screen panels, dock
-    projects/   featured projects, detail view, GitHub archive
-    apps/       about, resume, contact, notes, now playing, readme, terminal
-      arcade/   arcade window, tic-tac-toe, minesweeper, memory, best scores
-    ui/         small shared pieces
-  data/         config.ts (edit me) + derived links
-  lib/github/   API client, normalisation, cache, filtering, hook
-  styles/       tokens, base, desktop, window, apps, mobile
-public/         favicon, resume PDF, project images
+    boot/         boot screen
+    desktop/      desktop shell, icons, taskbar, start menu
+    window/       draggable, resizable window frame
+    mobile/       launcher, full-screen panels, dock
+    projects/     featured projects, detail view, GitHub archive
+    apps/         about, resume, contact, notes, now playing, guestbook,
+                  settings, readme, terminal
+      arcade/     arcade window, tic-tac-toe, minesweeper, memory, best scores
+    ui/           small shared pieces (links, tags, sample viewer)
+  data/           config.ts (edit me) + derived links
+  lib/
+    github/       API client, normalisation, cache, filtering, hook
+    guestbook.ts  Supabase client for the guestbook
+    theme.ts      theme store
+    boot.ts       boot screen state
+  styles/         tokens, base, desktop, window, apps, mobile
+public/           favicon, resume PDF, project images
+supabase/         guestbook.sql (database setup)
+.github/workflows/  deploy + Supabase keep-alive
 ```
 
 ## Accessibility notes
@@ -101,9 +191,14 @@ public/         favicon, resume PDF, project images
 Keyboard reachable throughout, visible focus rings, labelled icon buttons,
 Escape closes the start menu (and mobile panels), focus moves into windows
 and panels when they open, status never relies on colour alone, and
-`prefers-reduced-motion` disables animations. Windows drag only by the title
-bar and only with a mouse or pen, never on touch.
+`prefers-reduced-motion` disables animations and the boot screen. Windows drag
+and resize only with a mouse or pen, never on touch.
 
 The arcade games are fully playable by keyboard: the game tabs and the
 Minesweeper board use arrow keys, every square and card has a label that
 includes its state, and game results are announced to screen readers.
+
+The guestbook form has labelled fields and a character counter, and loading,
+errors and successful signatures are announced to screen readers. The
+View sample lightbox uses a native `<dialog>`, so focus stays inside while
+it's open, Escape closes it, and focus returns to the button afterwards.
